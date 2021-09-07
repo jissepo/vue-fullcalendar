@@ -4,8 +4,9 @@
 
 <script>
     import defaultsDeep from 'lodash.defaultsdeep'
-    import $ from 'jquery'
-    import 'fullcalendar'
+    window.moment = require('moment');
+    require('script-loader!fullcalendar/dist/fullcalendar');
+    require('script-loader!fullcalendar/dist/locale-all');
 
     export default {
         props: {
@@ -179,9 +180,7 @@
                 })
             })
 
-            $(function() {
-              cal.fullCalendar(defaultsDeep(this.config, this.defaultConfig))
-            });
+            cal.fullCalendar(defaultsDeep(this.config, this.defaultConfig))
         },
 
         methods: {
