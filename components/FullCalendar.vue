@@ -97,7 +97,7 @@
                         self.$emit('view-render', ...args)
                     },
 
-                    eventDestroy(event) {
+                    eventDestroy() {
                         if (this.sync) {
                             self.events = cal.fullCalendar('clientEvents')
                         }
@@ -144,42 +144,44 @@
         },
 
         mounted() {
-            const cal = $(this.$el),
-                self = this
 
+            const cal = $(this.$el);
+            console.log(cal);
             this.$on('remove-event', (event) => {
                 if(event && event.hasOwnProperty('id')){
-                    $(this.$el).fullCalendar('removeEvents', event.id);
+                    cal.fullCalendar('removeEvents', event.id);
                 }else{
-                    $(this.$el).fullCalendar('removeEvents', event);
+                    cal.fullCalendar('removeEvents', event);
                 }
             })
 
             this.$on('rerender-events', () => {
-                $(this.$el).fullCalendar('rerenderEvents')
+                cal.fullCalendar('rerenderEvents')
             })
 
             this.$on('refetch-events', () => {
-                $(this.$el).fullCalendar('refetchEvents')
+                cal.fullCalendar('refetchEvents')
             })
 
             this.$on('render-event', (event) => {
-                $(this.$el).fullCalendar('renderEvent', event)
+                cal.fullCalendar('renderEvent', event)
             })
 
             this.$on('reload-events', () => {
-                $(this.$el).fullCalendar('removeEvents')
-                $(this.$el).fullCalendar('addEventSource', this.events)
+                cal.fullCalendar('removeEvents')
+                cal.fullCalendar('addEventSource', this.events)
             })
 
             this.$on('rebuild-sources', () => {
-                $(this.$el).fullCalendar('removeEventSources')
+                cal.fullCalendar('removeEventSources')
                 this.eventSources.map(event => {
-                    $(this.$el).fullCalendar('addEventSource', event)
+                    cal.fullCalendar('addEventSource', event)
                 })
             })
 
-            cal.fullCalendar(defaultsDeep(this.config, this.defaultConfig))
+            $(function() {
+              cal.fullCalendar(defaultsDeep(this.config, this.defaultConfig))
+            });
         },
 
         methods: {
@@ -191,14 +193,14 @@
         watch: {
             events: {
                 deep: true,
-                handler(val) {
+                handler() {
                     $(this.$el).fullCalendar('removeEvents')
                     $(this.$el).fullCalendar('addEventSource', this.events)
                 },
             },
             eventSources: {
                 deep: true,
-                handler(val) {
+                handler() {
                     this.$emit('rebuild-sources')
                 },
             },
