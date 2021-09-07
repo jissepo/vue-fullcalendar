@@ -4,8 +4,8 @@
 
 <script>
     import defaultsDeep from 'lodash.defaultsdeep'
-    import 'fullcalendar'
     import $ from 'jquery'
+    import 'fullcalendar'
 
     export default {
         props: {
