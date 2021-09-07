@@ -73,6 +73,7 @@
         computed: {
             defaultConfig() {
                 const self = this
+                const cal = $(this.$el);
                 return {
                     header: this.header,
                     defaultView: this.defaultView,
@@ -147,7 +148,7 @@
         mounted() {
 
             const cal = $(this.$el);
-            console.log(cal);
+
             this.$on('remove-event', (event) => {
                 if(event && event.hasOwnProperty('id')){
                     cal.fullCalendar('removeEvents', event.id);
@@ -180,7 +181,7 @@
                 })
             })
 
-            cal.fullCalendar(defaultsDeep(this.config, this.defaultConfig))
+            cal.fullCalendar(defaultsDeep(this.config, this.defaultConfig));
         },
 
         methods: {
